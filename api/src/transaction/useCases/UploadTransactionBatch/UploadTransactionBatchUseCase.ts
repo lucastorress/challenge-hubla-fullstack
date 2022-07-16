@@ -68,10 +68,6 @@ export class UploadTransactionBatchUseCase {
       return result;
     } catch (error) {
       throw new Error(`ErrorExecute ${error}`);
-    } finally {
-      this.repository.findAll();
-      this.productRepository.findAll();
-      this.userRepository.findAll();
     }
   }
 

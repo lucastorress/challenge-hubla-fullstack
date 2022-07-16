@@ -18,14 +18,6 @@ class InMemoryTransactionsRepository implements ITransactionRepository {
     return InMemoryTransactionsRepository.instance;
   }
 
-  async findAll() {
-    console.log('Transactions:');
-    for (let item of this.items) {
-      console.log(item.valueOf());
-    }
-    console.log('Lenght:', this.items.length);
-  }
-
   async findById(id: string): Promise<Transaction | null> {
     const transaction = this.items.find((transaction) => transaction.id === id);
 

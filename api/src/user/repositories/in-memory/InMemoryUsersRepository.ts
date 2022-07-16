@@ -24,20 +24,6 @@ class InMemoryUsersRepository implements IUsersRepository {
     return InMemoryUsersRepository.instance;
   }
 
-  async findAll() {
-    console.log('Users:');
-    for (let item of this.items) {
-      console.log(item.valueOf());
-      console.log('Role:', Roles[item.role]);
-    }
-    console.log('Lenght U:', this.items.length);
-    console.log('Relations:');
-    for (let item of this.relations) {
-      console.log(item.valueOf());
-    }
-    console.log('Lenght UR:', this.relations.length);
-  }
-
   async findById(id: string): Promise<User | null> {
     const user = this.items.find((user) => user.id === id);
 

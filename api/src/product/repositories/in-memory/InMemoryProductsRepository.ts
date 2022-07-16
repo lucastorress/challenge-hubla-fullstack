@@ -17,14 +17,6 @@ class InMemoryProductsRepository implements IProductsRepository {
     return InMemoryProductsRepository.instance;
   }
 
-  async findAll() {
-    console.log('Products:');
-    for (let item of this.items) {
-      console.log(item.valueOf());
-    }
-    console.log('Lenght:', this.items.length);
-  }
-
   async findById(id: string): Promise<Product | null> {
     const product = this.items.find((product) => product.id === id);
 
