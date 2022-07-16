@@ -1,4 +1,4 @@
-import { Entity } from '../../shared/Entity';
+import { Entity } from '@shared/Entity';
 
 enum Roles {
   PRODUCER,
