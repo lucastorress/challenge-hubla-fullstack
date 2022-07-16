@@ -159,16 +159,16 @@ export class UploadTransactionBatchUseCase {
             batchId,
             type: transaction.type,
             date: transaction.date,
-            productId: product?.id,
+            productId: product.id,
             price: transaction.price,
-            userId: seller?.id,
+            userId: seller.id,
           };
           const transactionSaved = await this.repository.save(transactionProps);
           // Once we saved it, just push into list to return
           transactionsSaved.push({
             transaction: transactionSaved,
             product,
-            seller: seller?.name,
+            seller: seller.name,
           });
         } catch (error) {
           throw new Error(`Error during save a transaction: ${error}`);
