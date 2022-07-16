@@ -11,7 +11,15 @@
     "sourceMap": true,
     "incremental": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["./src/shared/*"],
+      "@shared-imports/*": ["./src/shared/index.ts"],
+      "@product/*": ["./src/product/*"],
+      "@transaction/*": ["./src/transaction/*"],
+      "@user/*": ["./src/user/*"]
+    }
   },
   "include": ["**/src/**/*", "__tests__/**/*"],
   "exclude": ["node_modules", "**/node_modules"],
