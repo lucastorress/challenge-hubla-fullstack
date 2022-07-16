@@ -1,3 +1,6 @@
 import { UserProps } from '../../entities/User';
 
-export type ICreateUserDTO = Omit<UserProps, 'id'>;
+export interface ICreateUserDTO extends Omit<UserProps, 'id'> {
+  email: string;
+  password: string;
+}
