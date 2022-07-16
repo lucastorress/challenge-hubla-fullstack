@@ -5,6 +5,7 @@ import {
   transactionFileProperties as transform,
   splitStringIntoChunks,
 } from './TransactionTransform';
+import { IErrorMessage } from '@shared/index';
 
 export default class UploadTransactionBatchController {
   constructor(private useCase: UploadTransactionBatchUseCase) {}
@@ -38,11 +39,11 @@ export default class UploadTransactionBatchController {
         });
       }
 
-      const uc = await this.useCase.execute(transactions);
+      const result = await this.useCase.execute(transactions);
 
-      return response.send(uc);
+      return response.send(result);
     } catch (error) {
-      response.status(400).json(error.message || 'Internal Server Error');
+      IErrorMessage(response, error.message, 400);
     }
   }
 }
