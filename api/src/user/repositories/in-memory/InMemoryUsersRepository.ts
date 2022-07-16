@@ -1,12 +1,19 @@
-import { User, UserProps } from '../../entities/User';
+import { Roles, User, UserProps } from '../../entities/User';
 import IUsersRepository from '../IUsersRepository';
+
+type ProducerAffiliate = {
+  producerId: string;
+  affiliateId: string;
+};
 
 class InMemoryUsersRepository implements IUsersRepository {
   private static instance: InMemoryUsersRepository;
   public items: User[];
+  public relations: ProducerAffiliate[];
 
   private constructor() {
     this.items = [];
+    this.relations = [];
   }
 
   public static getInstance(): InMemoryUsersRepository {
@@ -15,6 +22,20 @@ class InMemoryUsersRepository implements IUsersRepository {
     }
 
     return InMemoryUsersRepository.instance;
+  }
+
+  async findAll() {
+    console.log('Users:');
+    for (let item of this.items) {
+      console.log(item.valueOf());
+      console.log('Role:', Roles[item.role]);
+    }
+    console.log('Lenght U:', this.items.length);
+    console.log('Relations:');
+    for (let item of this.relations) {
+      console.log(item.valueOf());
+    }
+    console.log('Lenght UR:', this.relations.length);
   }
 
   async findById(id: string): Promise<User | null> {
@@ -29,6 +50,16 @@ class InMemoryUsersRepository implements IUsersRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const user = this.items.find((user) => user.email === email);
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
+
+  async findByName(name: string): Promise<User | null> {
+    const user = this.items.find((user) => user.name === name);
 
     if (!user) {
       return null;
@@ -59,6 +90,19 @@ class InMemoryUsersRepository implements IUsersRepository {
     }
 
     return false;
+  }
+
+  async addRelationProducerAffiliate(
+    producerId: string,
+    affiliateId: string,
+  ): Promise<boolean> {
+    const newRelation: ProducerAffiliate = {
+      producerId,
+      affiliateId,
+    };
+
+    this.relations.push(newRelation);
+    return true;
   }
 }
 
