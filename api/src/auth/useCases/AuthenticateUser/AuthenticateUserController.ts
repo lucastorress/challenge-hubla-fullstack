@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt = require('jsonwebtoken');
+import ITokenPayload from '../../middlewares/ITokenPayload';
 
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 
@@ -11,14 +12,15 @@ export default class AuthenticateUserController {
     try {
       const user = await this.useCase.execute({ email, password });
 
-      const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+      const { password: pass, ...userResponse } = user;
+
+      const payload = userResponse as ITokenPayload;
+
+      const token = jwt.sign(payload, process.env.TOKEN_SECRET, {
         expiresIn: process.env.TOKEN_TIME_TO_EXPIRE,
       });
 
-      const { password: pass, ...userResponse } = user;
-
       return response.status(200).json({
-        user: userResponse,
         token,
       });
     } catch (error) {

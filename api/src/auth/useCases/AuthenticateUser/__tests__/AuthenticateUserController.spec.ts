@@ -3,6 +3,7 @@ import { app } from '../../../../main';
 
 import { IAuthenticateUserDTO } from '../AuthenticateUserDTO';
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 
 describe('Unit test: Authenticate User [Controller]', () => {
   beforeAll(async () => {
@@ -19,9 +20,17 @@ describe('Unit test: Authenticate User [Controller]', () => {
     const response = await request(app).post(`/v1/auth/login`).send(body);
     const responseParsed = JSON.parse(response.text);
 
-    expect(responseParsed).toHaveProperty('user');
-    expect(responseParsed).not.toHaveProperty('password');
     expect(responseParsed).toHaveProperty('token');
+
+    const { token } = responseParsed;
+
+    const decodedToken = jwt.decode(token);
+
+    expect(decodedToken).toHaveProperty('id');
+    expect(decodedToken).toHaveProperty('name');
+    expect(decodedToken).toHaveProperty('email');
+    expect(decodedToken).toHaveProperty('role');
+    expect(decodedToken).not.toHaveProperty('password');
   });
 
   it('should not be able to authenticate user registered with wrong password and receive status 401', async () => {
