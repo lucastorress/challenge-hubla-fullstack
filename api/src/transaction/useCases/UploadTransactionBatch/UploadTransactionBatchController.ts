@@ -17,7 +17,7 @@ export default class UploadTransactionBatchController {
        * Here we just check and limits the upload on text files
        */
       if (file.mimetype !== 'text/plain') {
-        return response.status(400).json('Apenas arquivos com extensão .txt');
+        return response.status(400).json('Only files with extesion .txt');
       }
       const batch = file.buffer.toString('utf8');
 
