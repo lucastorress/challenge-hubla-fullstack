@@ -1,0 +1,83 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hubla - Challenge Backend API",
+    "version": "1.0.0",
+    "description": "User (producers and affiliates), products and transactions."
+  },
+  "servers": [
+    {
+      "url": "https://challenge-backend-hubla.make2u.com.br/v1",
+      "description": "URL to tests"
+    },
+    {
+      "url": "https://challenge-backend-hubla.herokuapp.com/v1",
+      "description": "URL to tests"
+    },
+    { "url": "http://localhost:3000/v1", "description": "URL to tests" }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tags": ["Authentication"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/transaction/upload": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tags": ["Transaction"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "Get own user already authenticated",
+        "description": "Gets information of the user's own. Need to be authenticated.",
+        "parameters": [],
+        "responses": {},
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }]
+      },
+      "post": {
+        "summary": "Create a new user",
+        "description": "Creates a new user with roles: producer (0) or affiliate (1). Don't need to be authenticated.",
+        "parameters": [],
+        "responses": {},
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }]
+      },
+      "put": {
+        "summary": "Update own user already authenticated",
+        "description": "Updates information of the user's own. Need to be authenticated.",
+        "parameters": [],
+        "responses": {},
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }]
+      },
+      "delete": {
+        "summary": "Delete own user already authenticated",
+        "description": "Delete information of the user's own. Need to be authenticated.",
+        "parameters": [],
+        "responses": {},
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/user/addProducerAffiliate": {
+      "post": {
+        "summary": "Associate an affiliate user to a producer user",
+        "description": "Associates a affiliate user to a producer user. The user authenticated must to be in one of the sides. Need to be authenticated.",
+        "parameters": [],
+        "responses": {},
+        "tags": ["User", "Producer", "Affiliate"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    }
+  }
+}

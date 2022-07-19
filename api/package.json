@@ -16,7 +16,7 @@
     "test": "jest",
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch",
-    "swagger-autogen": "ts-node-dev --transpile-only src/app/docs/swagger.ts"
+    "swagger-autogen": "ts-node-dev --transpile-only src/docs/swagger.ts"
   },
   "repository": {
     "type": "git",
