@@ -13,17 +13,29 @@ export default class UploadTransactionBatchController {
   public async handle(request: Request, response: Response) {
     const { file } = request;
     try {
+      /**
+       * Here we just check and limits the upload on text files
+       */
       if (file.mimetype !== 'text/plain') {
         return response.status(400).json('Apenas arquivos com extensão .txt');
       }
       const batch = file.buffer.toString('utf8');
 
+      /**
+       * Knowing that all text file contents are in a single string, we break it
+       * into equal pieces to identify each line and use it later to manipulate
+       * the data.
+       */
       const transactionChunks = batch.match(
         new RegExp('.{1,' + transform.properties.totalSize + '}', 'g'),
       );
 
       const transactions: IRequestTransactionBatchDTO[] = [];
 
+      /**
+       * Inside the loop, we check each row (already split inside the array)
+       * and turn it into properties inside the transaction object.
+       */
       for (let transactionChunkStr of transactionChunks) {
         const [type, date, productTitle, price, seller] = splitStringIntoChunks(
           transactionChunkStr,

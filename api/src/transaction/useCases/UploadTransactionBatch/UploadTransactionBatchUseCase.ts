@@ -29,8 +29,13 @@ export class UploadTransactionBatchUseCase {
 
   public async execute(props: IRequestTransactionBatchDTO[]) {
     try {
-      // Sort transactions by type ascending
+      /**
+       * Sorting the transactions in ascending order to start saving
+       * the information first by the type 1 transactions, which we already know
+       * the product and the producer.
+       */
       const transactions = await this.sortTransactionsByType(props);
+      // Here we create a ID to be the batch identification
       const batchId = newUUID;
 
       let transactionsToTransform;
@@ -67,10 +72,19 @@ export class UploadTransactionBatchUseCase {
 
       return result;
     } catch (error) {
-      throw new Error(`ErrorExecute ${error}`);
+      throw new Error(`ErrorExecute: ${error}`);
     }
   }
 
+  /**
+   * This function try to save the transactions and verify each case, respecting
+   * the business rules, being even possible to save also if the products,
+   * producers and affiliates doesn't exists.
+   * @param transactions An array of objects of transactions already transformed
+   * @param batchId The ID of transaction batch to be classified
+   * @returns An array of transactions already saved and with more information
+   * about it.
+   */
   private async saveTransactions(
     transactions: IRequestTransactionBatchDTO[],
     batchId: string,
@@ -95,8 +109,10 @@ export class UploadTransactionBatchUseCase {
         let seller = searchSeller;
 
         if (!searchProduct) {
-          // If transaction type is 1, we can create product
-          // 'cause we know producer name and can search by it
+          /**
+           * If transaction type is 1, we can create product
+           * 'cause we know producer name and can search by it
+           */
           if (transaction.type === 1) {
             // If producer user doesn't exists, we try to create it
             if (!searchSeller) {
@@ -112,8 +128,10 @@ export class UploadTransactionBatchUseCase {
                 );
               }
             }
-            // Assuming that producer is ok
-            // we can create product and associate it
+            /**
+             * Assuming that producer is ok, 'cause we found it
+             * we can create product and associate it
+             */
             const productProps = {
               title: transaction.productTitle,
               producerId: seller.id,
@@ -123,19 +141,21 @@ export class UploadTransactionBatchUseCase {
             } catch (error) {
               throw new Error(`Error while saving a product: ${error}`);
             }
-          }
-          // If transactions type is different of 1, we don't know the producer
-          // Assuming that transactions array is sorted
-          // And all products was already created
-          else if (transaction.type !== 1) {
+          } else if (transaction.type !== 1) {
+            /**
+             * If transactions type is different of 1, we don't know the producer,
+             * Assuming that transactions array is sorted, and all products was already created
+             */
             throw new Error(
               `Product ${transaction.productTitle} isn't registered and it wasn't possible to create it.`,
             );
           }
-        }
-        // If we already have the product
-        // We must check if transaction isn't type 1
-        else {
+        } else {
+          /**
+           * If we already have the product, we must check if transaction isn't type 1.
+           * 'Cause if it's, we can't know the producer and the sorted array already
+           * Sorted the transactions by ascending type
+           */
           if (transaction.type !== 1) {
             if (!searchSeller) {
               const userProps = {
@@ -174,8 +194,10 @@ export class UploadTransactionBatchUseCase {
           throw new Error(`Error during save a transaction: ${error}`);
         }
 
-        // We check if transaction was a sell made by affiliate (type 2)
-        // If it is, we associate this
+        /**
+         * We check if transaction was a sell made by affiliate (type 2).
+         * If it is, we associate the users, creating the relation between them.
+         */
         if (transaction.type === 2) {
           try {
             await this.userRepository.addRelationProducerAffiliate(
@@ -197,6 +219,12 @@ export class UploadTransactionBatchUseCase {
     }
   }
 
+  /**
+   * This function iterate inside transactions and calculate the values based
+   * on transaction types.
+   * @param transactions
+   * @returns An object with properties named by transaction types
+   */
   private async calculateTotalValueByType(
     transactions: IRequestTransactionBatchDTO[],
   ) {
@@ -223,6 +251,12 @@ export class UploadTransactionBatchUseCase {
     return total;
   }
 
+  /**
+   * This function sorts the "type" property inside the transaction object
+   * in ascending order.
+   * @param transactions An array of objects of transactions already transformed.
+   * @returns An array of transactions already sorted by propertie type.
+   */
   private async sortTransactionsByType(
     transactions: IRequestTransactionBatchDTO[],
   ) {
@@ -230,6 +264,12 @@ export class UploadTransactionBatchUseCase {
     return A.sort((a, b) => a.type - b.type);
   }
 
+  /**
+   * This function creates an array of objects, sorting each one by product ID
+   * and adds transactions related to this product.
+   * @param transactionsProducts
+   * @returns Returns a list of products containing their respective transactions.
+   */
   private async sortTransactionsByProduct(
     transactionsProducts: TransactionProduct[],
   ) {

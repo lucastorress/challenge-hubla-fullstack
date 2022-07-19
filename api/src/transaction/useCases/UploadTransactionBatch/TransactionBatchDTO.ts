@@ -1,5 +1,11 @@
 import { TransactionProps } from '../../entities/Transaction';
 
+/**
+ * At DTO modules, we just create interfaces/types to prepare other layers
+ * Those will use the data and need to know which info will receive
+ * As we can see, the types are minimum to be more malleable when called itself
+ */
+
 type TransactionLite = Omit<
   TransactionProps,
   'id' | 'batchId' | 'productId' | 'userId'
