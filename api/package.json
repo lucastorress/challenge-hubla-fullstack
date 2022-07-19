@@ -7,7 +7,7 @@
     "node": ">= 16.13 <17"
   },
   "scripts": {
-    "start:prod": "node build/app/server.js",
+    "start:prod": "node build/app.js",
     "start:dev": "ts-node-dev --transpile-only -r tsconfig-paths/register --ignore-watch node_modules src/app.ts",
     "clean": "rimraf coverage build tmp",
     "build": "tsc -p tsconfig.json",
