@@ -26,30 +26,16 @@ export default class UploadTransactionBatchController {
        * into equal pieces to identify each line and use it later to manipulate
        * the data.
        */
-      const transactionChunks = batch.match(
-        new RegExp('.{1,' + transform.properties.totalSize + '}', 'g'),
+      const transactionChunks = this.splitStringIntoEqualPieces(
+        batch,
+        transform.properties.totalSize,
       );
 
-      const transactions: IRequestTransactionBatchDTO[] = [];
-
       /**
-       * Inside the loop, we check each row (already split inside the array)
+       * We check each row (already split inside the array)
        * and turn it into properties inside the transaction object.
        */
-      for (let transactionChunkStr of transactionChunks) {
-        const [type, date, productTitle, price, seller] = splitStringIntoChunks(
-          transactionChunkStr,
-          transform.properties.indexes,
-        );
-
-        transactions.push({
-          type: +type,
-          date: new Date(date),
-          productTitle,
-          price: +price / 100,
-          seller,
-        });
-      }
+      const transactions = this.manipulateStringToDataObject(transactionChunks);
 
       const result = await this.useCase.execute(transactions);
 
@@ -57,5 +43,41 @@ export default class UploadTransactionBatchController {
     } catch (error) {
       IErrorMessage(response, error.message, 400);
     }
+  }
+
+  public splitStringIntoEqualPieces(text: string, size: number) {
+    /**
+     * Knowing that all text file contents are in a single string, we break it
+     * into equal pieces to identify each line and use it later to manipulate
+     * the data.
+     */
+    const transactionChunks = text.match(new RegExp('.{1,' + size + '}', 'g'));
+
+    return transactionChunks;
+  }
+
+  public manipulateStringToDataObject(transactionChunks: string[]) {
+    const transactions: IRequestTransactionBatchDTO[] = [];
+
+    /**
+     * Inside the loop, we check each row (already split inside the array)
+     * and turn it into properties inside the transaction object.
+     */
+    for (let transactionChunkStr of transactionChunks) {
+      const [type, date, productTitle, price, seller] = splitStringIntoChunks(
+        transactionChunkStr,
+        transform.properties.indexes,
+      );
+
+      transactions.push({
+        type: +type,
+        date: new Date(date),
+        productTitle,
+        price: +price / 100,
+        seller,
+      });
+    }
+
+    return transactions;
   }
 }
