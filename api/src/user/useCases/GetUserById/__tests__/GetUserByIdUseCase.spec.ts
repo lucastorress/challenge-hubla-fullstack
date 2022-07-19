@@ -22,5 +22,6 @@ describe('Unit test: Get User [Use Case]', () => {
     const user = await getUserCase.execute({ id });
 
     expect(user).toHaveProperty('id', id);
+    expect(user).not.toHaveProperty('password');
   });
 });
