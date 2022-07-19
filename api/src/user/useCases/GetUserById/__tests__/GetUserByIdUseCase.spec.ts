@@ -1,30 +1,26 @@
 import InMemoryUsersRepositoryInstance from '../../../repositories/in-memory/InMemoryUsersRepository';
 import IUserRepository from '../../../repositories/IUsersRepository';
-import { DeleteUserUseCase } from '../DeleteUserUseCase';
+import { GetUserUseCase } from '../GetUserUseCase';
 import { CreateUserUseCase } from '../../CreateUser/CreateUserUseCase';
 import { mockUser } from '../../../../shared/tests/mockUser';
 
-describe('Unit test: Delete User [Use Case]', () => {
+describe('Unit test: Get User [Use Case]', () => {
   let usersRepository: IUserRepository;
-  let deleteUserCase: DeleteUserUseCase;
+  let getUserCase: GetUserUseCase;
   let id: string;
 
   beforeAll(async () => {
     usersRepository = InMemoryUsersRepositoryInstance;
-    deleteUserCase = new DeleteUserUseCase(usersRepository);
+    getUserCase = new GetUserUseCase(usersRepository);
     const createUserCase = new CreateUserUseCase(usersRepository);
 
     const user = await createUserCase.execute(mockUser);
     id = user.id;
   });
 
-  it('should be able to delete an user that already exists', async () => {
-    const userDeleted = await deleteUserCase.execute({ id });
-    expect(userDeleted).toBe(true);
-  });
+  it('should be able to get an existent user by id', async () => {
+    const user = await getUserCase.execute({ id });
 
-  it('should not be able to delete an user that dont exists', async () => {
-    const userDeleted = await deleteUserCase.execute({ id });
-    expect(userDeleted).toBe(false);
+    expect(user).toHaveProperty('id', id);
   });
 });
