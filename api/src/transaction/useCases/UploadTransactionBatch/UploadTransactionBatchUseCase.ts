@@ -10,7 +10,7 @@ import ITransactionRepository from '../../repositories/ITransactionRepository';
 import IProductRepository from '../../../product/repositories/IProductsRepository';
 import IUserRepository from '../../../user/repositories/IUsersRepository';
 import { Roles } from '../../../user/entities/User';
-import { v4 as newUUID, validateUUID } from '@shared/helpers/UUID';
+import { v4 as newUUID, validateUUID } from '../../../shared/helpers/UUID';
 import { Transaction } from '../../entities/Transaction';
 import { Product } from '../../../product/entities/Product';
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UpdateUserUseCase } from './UpdateUserUseCase';
-import { IErrorMessage } from '@shared/index';
+import { IErrorMessage } from '../../../shared';
 
 export default class UpdateUserController {
   constructor(private useCase: UpdateUserUseCase) {}

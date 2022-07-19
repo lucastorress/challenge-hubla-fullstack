@@ -1,5 +1,5 @@
-import InMemoryUsersRepositoryInstance from '@user/repositories/in-memory/InMemoryUsersRepository';
-import IUserRepository from '@user/repositories/IUsersRepository';
+import InMemoryUsersRepositoryInstance from '../../../repositories/in-memory/InMemoryUsersRepository';
+import IUserRepository from '../../../repositories/IUsersRepository';
 import { DeleteUserUseCase } from '../DeleteUserUseCase';
 import { CreateUserUseCase } from '../../CreateUser/CreateUserUseCase';
 import { Roles } from '@user/entities/User';

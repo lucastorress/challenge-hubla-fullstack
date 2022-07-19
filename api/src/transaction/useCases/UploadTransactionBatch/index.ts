@@ -1,8 +1,8 @@
 import UploadTransactionBatchController from './UploadTransactionBatchController';
 import { UploadTransactionBatchUseCase } from './UploadTransactionBatchUseCase';
-import { InMemoryTransactionsRepositoryInstance } from '@shared/index';
-import { InMemoryProductsRepositoryInstance } from '@shared/index';
-import { InMemoryUsersRepositoryInstance } from '@shared/index';
+import { InMemoryTransactionsRepositoryInstance } from '../../../shared';
+import { InMemoryProductsRepositoryInstance } from '../../../shared';
+import { InMemoryUsersRepositoryInstance } from '../../../shared';
 
 const memoryTransactionRepository = InMemoryTransactionsRepositoryInstance;
 const memoryProductRepository = InMemoryProductsRepositoryInstance;

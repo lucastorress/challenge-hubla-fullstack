@@ -1,4 +1,4 @@
-import { Entity } from '@shared/Entity';
+import { Entity } from '../../shared/Entity';
 
 type ProductProps = {
   id?: string;

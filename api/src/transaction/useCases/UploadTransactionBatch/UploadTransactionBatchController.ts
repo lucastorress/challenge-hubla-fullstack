@@ -5,7 +5,7 @@ import {
   transactionFileProperties as transform,
   splitStringIntoChunks,
 } from './TransactionTransform';
-import { IErrorMessage } from '@shared/index';
+import { IErrorMessage } from '../../../shared';
 
 export default class UploadTransactionBatchController {
   constructor(private useCase: UploadTransactionBatchUseCase) {}

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IErrorMessage } from '@shared/index';
+import { IErrorMessage } from '../../../shared';
 import { CreateUserUseCase } from './CreateUserUseCase';
 
 export default class CreateUserController {

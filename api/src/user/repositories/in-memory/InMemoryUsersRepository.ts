@@ -1,4 +1,4 @@
-import { Roles, User, UserProps } from '../../entities/User';
+import { User, UserProps } from '../../entities/User';
 import IUsersRepository from '../IUsersRepository';
 
 type ProducerAffiliate = {
@@ -62,7 +62,7 @@ class InMemoryUsersRepository implements IUsersRepository {
 
   async update(id: string, user: UserProps): Promise<User> {
     const userIndex = this.items.findIndex((user) => user.id === id);
-    const userUpdated = User.create(user);
+    const userUpdated = User.create(user, id);
     this.items[userIndex] = userUpdated;
     return userUpdated;
   }
