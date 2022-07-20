@@ -55,6 +55,15 @@ And to know more information about the frontend, [here we have some information]
 
 If you do not want to run the project in the development environment, you can access it at [DEMO](https://hubla-challenge.make2u.com.br/).
 
+You can create a new user directly from the Swagger-UI dashboard or use these test credentials to login:
+
+```txt
+Username: developer@hub.la
+Password: 123456
+```
+
+And in the upload area, you can use the [PRODUCTS.txt](docs/PRODUCTS.txt) file
+
 ### Installation
 
 1. Clone the repo
