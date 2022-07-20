@@ -294,9 +294,7 @@ export class UploadTransactionBatchUseCase {
         type,
         date,
         price,
-        seller: {
-          name: transaction.seller,
-        },
+        seller: transaction.seller,
       };
 
       // If product wasn't found, we must to create this into the list

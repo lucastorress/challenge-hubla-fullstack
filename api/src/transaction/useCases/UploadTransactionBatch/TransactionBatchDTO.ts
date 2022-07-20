@@ -23,9 +23,7 @@ export type detailsTransactionClassifiedByProduct = {
   type: number;
   date: Date;
   price: number;
-  seller: {
-    name: string;
-  };
+  seller: string;
 };
 
 export type classifiedTransactionsByProduct = {
