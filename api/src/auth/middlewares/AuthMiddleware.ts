@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import ITokenPayload from './ITokenPayload';
-import jwt from 'jsonwebtoken';
+import jwt = require('jsonwebtoken');
 
 const authMiddleware = (
   request: Request,
@@ -24,6 +24,7 @@ const authMiddleware = (
 
     return next();
   } catch (error) {
+    console.log(error);
     return response.sendStatus(401);
   }
 };
