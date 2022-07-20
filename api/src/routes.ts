@@ -29,9 +29,14 @@ router.post('/auth/login', (request, response) => {
 });
 
 // Transactions
-router.post('/transaction/upload', upload, (request, response) => {
-  return uploadTransactionBatchController.handle(request, response);
-});
+router.post(
+  '/transaction/upload',
+  authMiddleware,
+  upload,
+  (request, response) => {
+    return uploadTransactionBatchController.handle(request, response);
+  },
+);
 
 // Users
 router.get('/user', authMiddleware, (request, response) => {
