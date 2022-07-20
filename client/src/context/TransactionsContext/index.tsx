@@ -23,6 +23,7 @@ function TransactionsProvider({ children }: FunctionalComponent): JSX.Element {
   const [transactions, setTransactions] = useState<Transactions>(
     {} as Transactions
   );
+
   const [currentProduct, setCurrentProduct] =
     useState<ClassifiedTransactionsByProduct>(
       {} as ClassifiedTransactionsByProduct

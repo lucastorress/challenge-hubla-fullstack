@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 import { DetailsTransactionClassifiedByProduct } from "@types";
 import { withSSRAuth } from "utils/auth/withSSRAuth";
+import { formatDate, toCurrency } from "utils";
 
 const columns: ColumnDefinitionType<
   DetailsTransactionClassifiedByProduct,
@@ -37,25 +38,7 @@ const Product = () => {
 
   const isEmpty = !data.transactions || !data.transactions.products.length;
 
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("pt-br", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const toCurrency = (
-    value: number,
-    formatOptions = {
-      style: "currency",
-      currency: "BRL",
-    }
-  ) => {
-    return new Intl.NumberFormat("pt-br", formatOptions).format(value);
-  };
-
-  const setType = (type: number) => {
+  const formatType = (type: number) => {
     const TYPES = {
       [1]: "Producer Seller",
       [2]: "Affiliate Seller",
@@ -99,13 +82,13 @@ const Product = () => {
               date: ({ date }) => <>{formatDate(date)}</>,
               type: ({ type }) => (
                 <C.Badge
-                  bg={setType(type).color}
+                  bg={formatType(type).color}
                   color="white"
                   minW="130px"
                   textAlign="center"
                   py="8px"
                 >
-                  {setType(type).type}
+                  {formatType(type).type}
                 </C.Badge>
               ),
             }}
