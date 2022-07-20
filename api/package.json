@@ -1,5 +1,5 @@
 {
-  "name": "challenge-hubla-fullstack",
+  "name": "hubla-api",
   "version": "1.0.0",
   "description": "Rest API repository using NodeJS, Express.js, TypeScript, Swagger and SOLID",
   "main": "src/app.ts",
