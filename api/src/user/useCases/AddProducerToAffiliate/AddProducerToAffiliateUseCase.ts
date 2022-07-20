@@ -1,15 +1,14 @@
 import IUsersRepository from '../../repositories/IUsersRepository';
 import { AddProducerToAffiliateDTO } from './AddProducerToAffiliateDTO';
-import { Roles } from '../../entities/User';
 
-export class CreateUserUseCase {
+export class AddProducerToAffiliateUseCase {
   constructor(private repository: IUsersRepository) {}
 
   public async execute(props: AddProducerToAffiliateDTO) {
     const searchProducerById = await this.repository.findById(props.producerId);
 
     if (!searchProducerById) {
-      throw new Error('Usuário não encontrado.');
+      throw new Error('User not found.');
     }
 
     const searchAffiliateById = await this.repository.findById(
@@ -17,7 +16,7 @@ export class CreateUserUseCase {
     );
 
     if (!searchAffiliateById) {
-      throw new Error('Usuário não encontrado.');
+      throw new Error('User not found.');
     }
 
     const relation = await this.repository.addRelationProducerAffiliate(
@@ -26,7 +25,7 @@ export class CreateUserUseCase {
     );
 
     if (!relation) {
-      throw new Error('Relação não criada.');
+      throw new Error(`Relation couldn't to be created.`);
     }
 
     return relation;

@@ -5,7 +5,7 @@ import {
   transactionFileProperties as transform,
   splitStringIntoChunks,
 } from './TransactionTransform';
-import { IErrorMessage } from '@shared/index';
+import { IErrorMessage } from '../../../shared';
 
 export default class UploadTransactionBatchController {
   constructor(private useCase: UploadTransactionBatchUseCase) {}
@@ -13,31 +13,29 @@ export default class UploadTransactionBatchController {
   public async handle(request: Request, response: Response) {
     const { file } = request;
     try {
+      /**
+       * Here we just check and limits the upload on text files
+       */
       if (file.mimetype !== 'text/plain') {
-        return response.status(400).json('Apenas arquivos com extensão .txt');
+        return response.status(400).json('Only files with extesion .txt');
       }
       const batch = file.buffer.toString('utf8');
 
-      const transactionChunks = batch.match(
-        new RegExp('.{1,' + transform.properties.totalSize + '}', 'g'),
+      /**
+       * Knowing that all text file contents are in a single string, we break it
+       * into equal pieces to identify each line and use it later to manipulate
+       * the data.
+       */
+      const transactionChunks = this.splitStringIntoEqualPieces(
+        batch,
+        transform.properties.totalSize,
       );
 
-      const transactions: IRequestTransactionBatchDTO[] = [];
-
-      for (let transactionChunkStr of transactionChunks) {
-        const [type, date, productTitle, price, seller] = splitStringIntoChunks(
-          transactionChunkStr,
-          transform.properties.indexes,
-        );
-
-        transactions.push({
-          type: +type,
-          date: new Date(date),
-          productTitle,
-          price: +price / 100,
-          seller,
-        });
-      }
+      /**
+       * We check each row (already split inside the array)
+       * and turn it into properties inside the transaction object.
+       */
+      const transactions = this.manipulateStringToDataObject(transactionChunks);
 
       const result = await this.useCase.execute(transactions);
 
@@ -45,5 +43,41 @@ export default class UploadTransactionBatchController {
     } catch (error) {
       IErrorMessage(response, error.message, 400);
     }
+  }
+
+  public splitStringIntoEqualPieces(text: string, size: number) {
+    /**
+     * Knowing that all text file contents are in a single string, we break it
+     * into equal pieces to identify each line and use it later to manipulate
+     * the data.
+     */
+    const transactionChunks = text.match(new RegExp('.{1,' + size + '}', 'g'));
+
+    return transactionChunks;
+  }
+
+  public manipulateStringToDataObject(transactionChunks: string[]) {
+    const transactions: IRequestTransactionBatchDTO[] = [];
+
+    /**
+     * Inside the loop, we check each row (already split inside the array)
+     * and turn it into properties inside the transaction object.
+     */
+    for (let transactionChunkStr of transactionChunks) {
+      const [type, date, productTitle, price, seller] = splitStringIntoChunks(
+        transactionChunkStr,
+        transform.properties.indexes,
+      );
+
+      transactions.push({
+        type: +type,
+        date: new Date(date),
+        productTitle,
+        price: +price / 100,
+        seller,
+      });
+    }
+
+    return transactions;
   }
 }

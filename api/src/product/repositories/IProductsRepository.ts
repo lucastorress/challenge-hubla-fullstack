@@ -1,4 +1,4 @@
-import IRepository from '@shared/IRepository';
+import IRepository from '../../shared/IRepository';
 import { Product, ProductProps } from '../entities/Product';
 
 export default interface IProductRepository

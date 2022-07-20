@@ -10,13 +10,13 @@ export class CreateUserUseCase {
     const isValidEmail = validateEmail(props.email);
 
     if (!isValidEmail) {
-      throw new Error('E-mail inválido.');
+      throw new Error('Invalid email.');
     }
 
     const searchUserByEmail = await this.repository.findByEmail(props.email);
 
     if (searchUserByEmail) {
-      throw new Error('Usuário já cadastrado.');
+      throw new Error('User already registered. Try another email.');
     }
 
     if (!props.role) {

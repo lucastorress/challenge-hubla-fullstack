@@ -1,4 +1,4 @@
-import { IErrorMessage } from '@shared/index';
+import { IErrorMessage } from '../../../shared/index';
 import { Request, Response } from 'express';
 import { DeleteUserUseCase } from './DeleteUserUseCase';
 

@@ -1,5 +1,11 @@
 import { TransactionProps } from '../../entities/Transaction';
 
+/**
+ * At DTO modules, we just create interfaces/types to prepare other layers
+ * Those will use the data and need to know which info will receive
+ * As we can see, the types are minimum to be more malleable when called itself
+ */
+
 type TransactionLite = Omit<
   TransactionProps,
   'id' | 'batchId' | 'productId' | 'userId'
@@ -9,7 +15,7 @@ export type transactionValueByTypes = {
   producerSales: number;
   affiliateSales: number;
   commisionPaid: number;
-  comissionReceived: number;
+  commissionReceived: number;
 };
 
 export type detailsTransactionClassifiedByProduct = {
@@ -17,9 +23,7 @@ export type detailsTransactionClassifiedByProduct = {
   type: number;
   date: Date;
   price: number;
-  seller: {
-    name: string;
-  };
+  seller: string;
 };
 
 export type classifiedTransactionsByProduct = {

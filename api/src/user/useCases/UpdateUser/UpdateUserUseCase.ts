@@ -8,10 +8,10 @@ export class UpdateUserUseCase {
     const searchUserById = await this.repository.findById(props.userId);
 
     if (!searchUserById) {
-      throw new Error('Usuário não encontrado.');
+      throw new Error('User not found.');
     }
 
-    const user = await this.repository.save(props.body);
+    const user = await this.repository.update(props.userId, props.body);
 
     return user.valueOf();
   }
