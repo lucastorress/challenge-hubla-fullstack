@@ -21,6 +21,9 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -37,15 +40,18 @@
 
 ## About The Project
 
-<p>In this project, we used SOLID concepts in the back-end, abusing the versatility of TypeScript and creating unit tests with Jest. In addition, we created API documentation with Swagger-UI.</p>
+### Built With
 
-<p>The organization of folders uses the concept of "package by folder" to separate modules and their responsibilities.</p>
+- [React](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Next.js](https://nextjs.org/)
+- [Chakra-UI](https://chakra-ui.com/)
+- [Nookies](https://github.com/maticzav/nookies)
+- [Framer Motion](https://www.framer.com/api/motion/)
 
-<p>The repository layer is designed to adapt to any gateway that respects the interface and business rules of the use case layer. Here we have already implemented a layer that uses RAM memory to persist the data.</p>
-
-For more information on database design, here is a simple [DOCUMENTATION DB](docs/README-DB.md).
-
-And to know more information about the frontend, [here we have some information](client/README.md).
+- [ESLint](https:///)
+- [Prettier](https://)
+- [EditorConfig](https://)
 
 <!-- GETTING STARTED -->
 
@@ -60,22 +66,11 @@ If you do not want to run the project in the development environment, you can ac
    git clone https://github.com/lucastorress/challenge-hubla-fullstack.git
    ```
 2. Install YARN packages
-
    ```sh
-   cd ./api
-   yarn install
-
-   cd ./client
    yarn install --production=false
    ```
-
 3. Run the command (with the node server running)
-
    ```JS
-   // To server side
-   yarn start:dev
-
-   // To client side
    yarn dev
    ```
 
