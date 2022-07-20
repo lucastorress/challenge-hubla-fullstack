@@ -188,7 +188,8 @@
         "type": "object",
         "properties": {
           "transactions": {
-            "type": "object"
+            "type": "object",
+            "$ref": "#/components/schemas/IClassifiedTransactionsByProducts"
           },
           "totalValueByTypes": {
             "type": "object",
@@ -196,6 +197,18 @@
           },
           "lengthOfTransactions": {
             "type": "string"
+          }
+        }
+      },
+      "IClassifiedTransactionsByProducts": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "description": "Array<IClassifiedTransactionsByProduct>",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IClassifiedTransactionsByProduct"
+            }
           }
         }
       },
