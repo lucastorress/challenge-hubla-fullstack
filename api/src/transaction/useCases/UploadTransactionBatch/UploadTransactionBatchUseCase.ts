@@ -232,7 +232,7 @@ export class UploadTransactionBatchUseCase {
       producerSales: 0,
       affiliateSales: 0,
       commisionPaid: 0,
-      comissionReceived: 0,
+      commissionReceived: 0,
     };
 
     for (let transaction of transactions) {
@@ -244,7 +244,7 @@ export class UploadTransactionBatchUseCase {
       } else if (type === 3) {
         total.commisionPaid += transaction.price;
       } else if (type === 4) {
-        total.comissionReceived += transaction.price;
+        total.commissionReceived += transaction.price;
       }
     }
 

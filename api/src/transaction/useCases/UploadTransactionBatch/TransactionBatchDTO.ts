@@ -15,7 +15,7 @@ export type transactionValueByTypes = {
   producerSales: number;
   affiliateSales: number;
   commisionPaid: number;
-  comissionReceived: number;
+  commissionReceived: number;
 };
 
 export type detailsTransactionClassifiedByProduct = {
