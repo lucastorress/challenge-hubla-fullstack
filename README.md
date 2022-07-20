@@ -7,6 +7,8 @@
   <p align="center">
     <br />
     <br />
+    <a href="https://api.hubla-challenge.make2u.com.br/">API Docs</a>
+    ·
     <a href="https://hubla-challenge.make2u.com.br/">View Demo</a>
     ·
     <a href="https://github.com/lucastorress/challenge-hubla-fullstack/issues">Report Bug</a>
