@@ -158,6 +158,19 @@
         "parameters": [],
         "responses": {},
         "tags": ["User", "Producer", "Affiliate"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddProducerAffiliateRequestDTO"
+              },
+              "example": {
+                "producerId": "uuid",
+                "affiliateId": "uuid"
+              }
+            }
+          }
+        },
         "security": [{ "bearerAuth": [] }]
       }
     }
@@ -305,6 +318,17 @@
             "type": "number",
             "enum": [0, 1],
             "description": "Producer is 0; Affiliate is 1"
+          }
+        }
+      },
+      "AddProducerAffiliateRequestDTO": {
+        "type": "object",
+        "properties": {
+          "producerId": {
+            "type": "string"
+          },
+          "affiliateId": {
+            "type": "number"
           }
         }
       },
