@@ -19,17 +19,49 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "description": "",
+        "summary": "Authenticate an user.",
+        "description": "Authenticates an user already registered.",
         "parameters": [],
-        "responses": {},
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticateUserResponseDTO"
+                }
+              }
+            }
+          }
+        },
         "tags": ["Authentication"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateUserRequestDTO"
+              },
+              "example": {
+                "email": "username@mail.com",
+                "password": "Password123"
+              }
+            }
+          }
+        },
         "security": [{ "bearerAuth": [] }]
       }
     },
     "/transaction/upload": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "summary": "Upload a text file.",
+        "description": "Uploads a text file containing the exported transactions.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "file",
+            "required": true
+          }
+        ],
         "responses": {},
         "tags": ["Transaction"],
         "security": [{ "bearerAuth": [] }]
@@ -48,9 +80,44 @@
         "summary": "Create a new user",
         "description": "Creates a new user with roles: producer (0) or affiliate (1). Don't need to be authenticated.",
         "parameters": [],
-        "responses": {},
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IErrorMessage"
+                }
+              }
+            }
+          }
+        },
         "tags": ["User"],
-        "security": [{ "bearerAuth": [] }]
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestDTO"
+              },
+              "example": {
+                "name": "Username",
+                "email": "username@mail.com",
+                "password": "Password123",
+                "role": 0
+              }
+            }
+          }
+        }
       },
       "put": {
         "summary": "Update own user already authenticated",
@@ -58,6 +125,21 @@
         "parameters": [],
         "responses": {},
         "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestDTO"
+              },
+              "example": {
+                "name": "Username",
+                "email": "username@mail.com",
+                "password": "Password123",
+                "role": 0
+              }
+            }
+          }
+        },
         "security": [{ "bearerAuth": [] }]
       },
       "delete": {
@@ -77,6 +159,159 @@
         "responses": {},
         "tags": ["User", "Producer", "Affiliate"],
         "security": [{ "bearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthenticateUserRequestDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticateUserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "description": "A JWT Token containing informations of user.",
+            "type": "string"
+          }
+        }
+      },
+      "IResponseTransactionBatchDTO": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "object"
+          },
+          "totalValueByTypes": {
+            "type": "object",
+            "$ref": "#/components/schemas/ITransactionValueByTypes"
+          },
+          "lengthOfTransactions": {
+            "type": "string"
+          }
+        }
+      },
+      "IClassifiedTransactionsByProduct": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "productTitle": {
+            "type": "string"
+          },
+          "details": {
+            "description": "Array<IDetailsTransactionClassifiedByProduct>",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IDetailsTransactionClassifiedByProduct"
+            }
+          }
+        }
+      },
+      "IDetailsTransactionClassifiedByProduct": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "seller": {
+            "type": "string"
+          }
+        }
+      },
+      "ITransactionValueByTypes": {
+        "type": "object",
+        "properties": {
+          "producerSales": {
+            "type": "number"
+          },
+          "affiliateSales": {
+            "type": "number"
+          },
+          "commisionPaid": {
+            "type": "number"
+          },
+          "commissionReceived": {
+            "type": "number"
+          }
+        }
+      },
+      "UserRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "number",
+            "enum": [0, 1],
+            "description": "Producer is 0; Affiliate is 1"
+          }
+        }
+      },
+      "UserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "number",
+            "enum": [0, 1],
+            "description": "Producer is 0; Affiliate is 1"
+          }
+        }
+      },
+      "IErrorMessage": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string"
+          },
+          "error": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
