@@ -3,18 +3,14 @@
   "info": {
     "title": "Hubla - Challenge Backend API",
     "version": "1.0.0",
-    "description": "User (producers and affiliates), products and transactions."
+    "description": "API documentation with user and transaction use cases. In addition, it has authentication routes. Product use cases will still be added in a future update."
   },
   "servers": [
     {
-      "url": "https://challenge-backend-hubla.make2u.com.br/v1",
+      "url": "https://api.hubla-challenge.make2u.com.br/v1",
       "description": "URL to tests"
     },
-    {
-      "url": "https://challenge-backend-hubla.herokuapp.com/v1",
-      "description": "URL to tests"
-    },
-    { "url": "http://localhost:3000/v1", "description": "URL to tests" }
+    { "url": "http://localhost:8080/v1", "description": "URL to tests" }
   ],
   "paths": {
     "/auth/login": {
@@ -47,8 +43,7 @@
               }
             }
           }
-        },
-        "security": [{ "bearerAuth": [] }]
+        }
       }
     },
     "/transaction/upload": {
