@@ -1,5 +1,5 @@
 import InMemoryUsersRepositoryInstance from '../../repositories/in-memory/InMemoryUsersRepository';
-import GetUserController from './GetUserByIdController';
+import GetUserController from './GetUserController';
 import { GetUserUseCase } from './GetUserUseCase';
 
 const memoryUserRepository = InMemoryUsersRepositoryInstance;

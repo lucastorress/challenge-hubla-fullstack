@@ -1,3 +1,3 @@
-import { IGetUserRequestDTO } from '../GetUserById/GetUserDTO';
+import { IGetUserRequestDTO } from '../GetUser/GetUserDTO';
 
 export type IDeleteUserDTO = IGetUserRequestDTO;
