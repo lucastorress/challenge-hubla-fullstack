@@ -25,7 +25,7 @@ type ClassifiedTransactionsByProducts = {
 type TransactionValueByTypes = {
   producerSales: number;
   affiliateSales: number;
-  commissionPaid: number;
+  commisionPaid: number;
   commissionReceived: number;
 };
 
