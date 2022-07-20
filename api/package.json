@@ -1,8 +1,8 @@
 {
   "name": "challenge-hubla-fullstack",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/app/server.ts",
+  "description": "Rest API repository using NodeJS, Express.js, TypeScript, Swagger and SOLID",
+  "main": "src/app.ts",
   "engines": {
     "node": ">= 16.13 <17"
   },
@@ -22,7 +22,16 @@
     "type": "git",
     "url": "git+https://github.com/lucastorress/challenge-hubla-fullstack.git"
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "solid",
+    "tests-with-jest",
+    "docker",
+    "jwt-token",
+    "api rest",
+    "swagger"
+  ],
   "author": "Lucas P. Torres de Araújo",
   "license": "MIT",
   "bugs": {

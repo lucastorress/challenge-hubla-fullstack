@@ -23,6 +23,11 @@ const upload = multer({
 
 const router = Router();
 
+// Redirect
+router.get('/', (request, response) => {
+  response.redirect(301, '/api-docs');
+});
+
 // Auth
 router.post('/auth/login', (request, response) => {
   return authenticateUserController.handle(request, response);

@@ -21,6 +21,12 @@ app.use(compression());
 app.use(morgan('tiny'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  '/',
+  router.get('/', (request, response) => {
+    response.redirect(301, '/api-docs');
+  }),
+);
 app.use('/v1', router);
 
 export { app };
